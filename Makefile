@@ -1,8 +1,6 @@
-#Don't run this makefile, it's only here to be included into others
-#I recommend that you add a "-march=<xxx>" to reflect your own machine.
-
-compiler = g++
-flags = -Wall -Wextra -Werror -Wfatal-errors
-compile = -D_REENTRANT -O3 -c -g -ggdb
-link = -o
-library = ar rcs
+.PHONY: all clean test install
+all clean test install:
+	$(MAKE) -C ppm       $@
+	$(MAKE) -C timer     $@
+	$(MAKE) -C trace     $@
+	$(MAKE) -C tracetest $@

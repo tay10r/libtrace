@@ -1,17 +1,28 @@
-include ../Makefile
+INC_CXXFLAGS ?= -I$(CURDIR)/../include
 
-objects = main.o ../lib/libtrace.a ../lib/libppm.a ../lib/libtimer.a
-libs = -lstdc++
-includes = -I../include
+objects = main.o
 
-tracetest: $(objects)
-	$(compiler) $(flags) $(libs) $(link) tracetest $(objects)
+libs = $(CURDIR)/../trace/libtrace.a \
+       $(CURDIR)/../timer/libtimer.a \
+       $(CURDIR)/../ppm/libppm.a
+	
+.PHONY: all
+all: tracetest
+
+tracetest: $(objects) $(libs)
+	$(CXX) $^ -o $@
 
 main.o: main.cc
-	$(compiler) $(flags) $(includes) $(compile) main.cc
 
+%.o: %.cc
+	$(CXX) $(INC_CXXFLAGS) $(CXXFLAGS) -c $< -o $@
+
+.PHONY: clean
 clean:
-	rm *.o
+	$(RM) $(objects) tracetest
 
-veryclean: clean
-	rm tracetest *.ppm
+.PHONY: test
+test:
+
+.PHONY: install
+install:

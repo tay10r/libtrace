@@ -1,20 +1,21 @@
-include ../Makefile
-
 objects = function.o main.o
-libs = -lstdc++
+
+.PHONY: all
+all: libtimer.a
 
 libtimer.a: $(objects)
-	$(library) libtimer.a $(objects)
-	cd ../lib;ln -s ../timer/libtimer.a libtimer.a;cd ../timer
+	$(AR) $(ARFLAGS) $@ $^
 
 function.o: function.cc timer.h
-	$(compiler) $(flags) $(compile) function.cc
 
 main.o: main.cc timer.h
-	$(compiler) $(flags) $(compile) main.cc
 
+.PHONY: clean
 clean:
-	rm *.o
+	$(RM) libtimer.a $(objects)
 
-veryclean: clean
-	rm libtimer.a
+.PHONY: install
+install:
+
+.PHONY: test
+test:

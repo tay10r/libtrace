@@ -1,20 +1,21 @@
-include ../Makefile
-
 objects = main.o io.o
-libs = -lstdc++
+
+.PHONY: all
+all: libppm.a
 
 libppm.a: $(objects)
-	$(library) libppm.a $(objects)
-	cd ../lib;ln -s ../ppm/libppm.a libppm.a;cd ../ppm
+	$(AR) $(ARFLAGS) $@ $^
 
 main.o: main.cc ppm.h
-	$(compiler) $(flags) $(compile) main.cc
 
 io.o: io.cc ppm.h
-	$(compiler) $(flags) $(compile) io.cc
 
+.PHONY: clean
 clean:
-	rm *.o
+	$(RM) *.o libppm.a
 
-veryclean: clean
-	rm libppm.a
+.PHONY: install
+install:
+
+.PHONY: test
+test:
